@@ -31,7 +31,7 @@ The workflow lives entirely in this repository and can be **imported with one li
 Add a minimal stub that forwards the `issue_comment` event:
 
 ```yaml
-# .github/workflows/backport-on-comment.yml
+# .github/workflows/backport-trigger.yml
 name: Backport trigger
 
 on:
@@ -40,7 +40,7 @@ on:
 
 jobs:
   backport:
-    uses: oat-sa/backport-action/.github/workflows/backport.yml@v1
+    uses: oat-sa/backport-action/.github/workflows/backport-on-comment.yml@v1
 
     # Required permissions for the called workflow
     permissions:

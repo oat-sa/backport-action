@@ -60,7 +60,7 @@ jobs:
         echo "backport_pr_name=backport/${{ steps.prbranch.outputs.head_ref }}-$randomString" >>"$GITHUB_OUTPUT"
 
         # test for existing branch first
-        if git ls-remote --exit-code --heads origin "$TARGET" >/dev/null; then
+        if git ls-remote --exit-code origin "refs/heads/$TARGET" >/dev/null; then
           echo "branch=$TARGET"   >>"$GITHUB_OUTPUT"
           echo "created=false"    >>"$GITHUB_OUTPUT"
           exit 0
@@ -78,11 +78,11 @@ jobs:
             new_branch="release/${tag_name}.${patch}"
           else
             # non-semver tag → keep original name
-            new_branch="release/${TARGET}"
+            new_branch="release/${TARGET}.1"
           fi
 
           # if release branch already exists, exit and print message
-          if git ls-remote --exit-code --heads origin "$new_branch" >/dev/null; then
+          if git ls-remote --exit-code origin "refs/heads/$new_branch" >/dev/null; then
             echo "::error::Branch named '$new_branch' already exists. Please delete it before retrying."
             exit 1
           fi
